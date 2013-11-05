@@ -19,14 +19,34 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
+        public static final int button_text=0x7f040003;
+        public static final int main_button_distance=0x7f040002;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int highscore_bg=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int matrix=0x7f020002;
+        public static final int options_bg=0x7f020003;
+        public static final int play_bg=0x7f020004;
+        public static final int tetromino_i=0x7f020005;
+        public static final int tetromino_j=0x7f020006;
+        public static final int tetromino_l=0x7f020007;
+        public static final int tetromino_o=0x7f020008;
+        public static final int tetromino_s=0x7f020009;
+        public static final int tetromino_t=0x7f02000a;
+        public static final int tetromino_z=0x7f02000b;
+        public static final int title=0x7f02000c;
     }
     public static final class id {
-        public static final int action_settings=0x7f080002;
-        public static final int play_button=0x7f080000;
-        public static final int textviewDiProva=0x7f080001;
+        public static final int action_settings=0x7f080008;
+        public static final int buttonsLayout=0x7f080001;
+        public static final int high_score_button=0x7f080003;
+        public static final int level=0x7f080005;
+        public static final int main_title=0x7f080000;
+        public static final int matrix=0x7f080007;
+        public static final int next_tetromino=0x7f080006;
+        public static final int options_button=0x7f080004;
+        public static final int play_button=0x7f080002;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -39,6 +59,10 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050002;
+        public static final int high_score=0x7f050004;
+        public static final int level=0x7f050006;
+        public static final int options=0x7f050005;
+        public static final int play=0x7f050003;
     }
     public static final class style {
         /** 
