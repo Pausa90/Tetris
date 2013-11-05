@@ -30,7 +30,7 @@ public class PlayActivity extends Activity
 		this.swype_min_vel = (int) dp2px(SWIPE_THRESHOLD_VELOCITY);
 
 	}
-
+	
 	private float dp2px(int dip) {
 		float scale = getResources().getDisplayMetrics().density;
 		return dip * scale + 0.5f;
