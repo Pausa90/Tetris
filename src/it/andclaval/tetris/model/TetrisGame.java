@@ -58,25 +58,28 @@ public class TetrisGame {
 		return this.matrix.update();
 	}
 	
-	public void rotateClockWise(){
-		this.matrix.rotateCurrent(true);
+	public boolean rotateClockWise(){
+		return this.matrix.rotateCurrent(true);
 	}
 	
-	public void rotateAntiClockWise(){
-		this.matrix.rotateCurrent(false);
+	public boolean rotateAntiClockWise(){
+		return this.matrix.rotateCurrent(false);
 	}
 	
-	public void traslateToLeft(){
-		this.matrix.traslateCurrent(true);
+	public boolean traslateToLeft(){
+		return this.matrix.traslateCurrent(true);
 	}
 	
-	public void traslateToRight(){
-		this.matrix.traslateCurrent(false);
+	public boolean traslateToRight(){
+		return this.matrix.traslateCurrent(false);
 	}
 	
-	public void traslateToBelow(){
+	/**
+	 * Returna true se è possibile scendere, false se viene creato un nuovo tetromino 
+	 */
+	public boolean traslateToBelow(){
 		//riazzerare il tempo
-		this.matrix.update();
+		return this.matrix.update();
 	}
 	
 	/** Se il pezzo deve cadere giù **/

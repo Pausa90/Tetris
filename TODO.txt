@@ -1,0 +1,2 @@
+Creare cubetti dei singoli colori: se si cancella una riga va sostituito il tetromino con i pezzetti
+Sistemare i tetromini (hanno un po' di margine)

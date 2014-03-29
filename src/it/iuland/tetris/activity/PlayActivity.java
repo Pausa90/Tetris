@@ -107,7 +107,7 @@ implements GestureDetector.OnGestureListener{
 					this.gameManager.swypeRight();
 			}
 		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 		return false;
 	}

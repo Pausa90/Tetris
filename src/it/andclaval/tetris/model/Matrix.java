@@ -295,16 +295,16 @@ public class Matrix {
 	}
 
 	/** Aggiornamento della matrice al ruotare del pezzo **/
-	public void rotateCurrent(boolean clockWise){
+	public boolean rotateCurrent(boolean clockWise){
 		Couple<Couple<Integer>> fromTo = this.getMinMaxCoordinates(); //Primo elemento coppia di righe, secondo coppia di colonne
 		int[][] subMatrix;
 		if (this.currentTetromino.equals("Tetromino_O"))
-			return;
+			return false;
 		
 		try {
 			subMatrix = this.fromPositionToSubMatrix(fromTo);
 		} catch (BorderException e) {
-			return;
+			return false;
 		}  
 		
 		if (clockWise)
@@ -316,8 +316,9 @@ public class Matrix {
 			this.writeStatus(this.FREE);
 			this.updateCoordinatesAfterRotation(subMatrix, fromTo, clockWise);
 			this.writeStatus(this.CURRENT);
+			return true;
 		}
-		
+		return false;
 	}
 
 	private void updateCoordinatesAfterRotation(int[][] subMatrix, Couple<Couple<Integer>> fromTo, boolean clockWise) {
