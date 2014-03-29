@@ -29,6 +29,10 @@ public class TetrisGame {
 	public void setMatrix(Matrix matrix) {
 		this.matrix = matrix;
 	}
+	
+	public String getCurrentTetrominoName(){
+		return this.current.toString();
+	}
 
 	/** Metodo di avvio del gioco **/
 	public void startGame(){
@@ -42,8 +46,8 @@ public class TetrisGame {
 		this.matrix.putTetromino(current);
 	}
 	
-	public void update(){
-		this.matrix.update();
+	public boolean update(){
+		return this.matrix.update();
 	}
 	
 	public void rotateClockWise(){

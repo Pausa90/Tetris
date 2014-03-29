@@ -22,58 +22,18 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/tetromino_o" />
 
-    <LinearLayout
-        android:id="@+id/matrix"
+    <RelativeLayout
+        android:id="@+id/matrixLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/matrix"
-        android:padding="1dp"
-        
-        android:orientation="vertical"
-        >
-        
-        <LinearLayout 
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
+        android:layout_centerHorizontal="true" >
 
-        <ImageView
+        <it.iuland.tetris.MatrixView
+            android:id="@+id/matrix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/tetromino_i" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tetromino_l" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tetromino_j" />
-        </LinearLayout>
-        
-        <LinearLayout 
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tetromino_o" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tetromino_s" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tetromino_z" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/tetromino_t" />
-        </LinearLayout>
-    </LinearLayout>
-    
+            android:layout_centerInParent="true" />
+     </RelativeLayout> 
 
 </RelativeLayout>
