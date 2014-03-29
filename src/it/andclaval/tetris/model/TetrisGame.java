@@ -33,6 +33,14 @@ public class TetrisGame {
 	public String getCurrentTetrominoName(){
 		return this.current.toString();
 	}
+	
+	public int getCurrentLevel(){
+		return this.matrix.getLevel();
+	}
+	
+	public String getNextTetromino(){
+		return this.next.toString();
+	}
 
 	/** Metodo di avvio del gioco **/
 	public void startGame(){

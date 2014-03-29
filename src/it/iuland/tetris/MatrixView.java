@@ -4,11 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 public class MatrixView extends View {
 	
@@ -26,10 +23,8 @@ public class MatrixView extends View {
 
 	@Override
 	synchronized protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);		
-		
+		super.onDraw(canvas);				
 		canvas.drawBitmap(this.matrixBitmap, this.matrixOffsetLeft, this.matrixOffsetTop, null);
-		
 	}
 	
     @Override
@@ -38,6 +33,5 @@ public class MatrixView extends View {
     	this.setMeasuredDimension(matrixBitmap.getWidth(), matrixBitmap.getHeight());
 
     }
-
 
 }

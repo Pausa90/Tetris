@@ -58,7 +58,7 @@ implements GestureDetector.OnGestureListener{
 		MatrixView matrixView = (MatrixView)findViewById(R.id.matrix);
 		ImageView nextTetromino = (ImageView) findViewById(R.id.next_tetromino);
 		TextView level = (TextView) findViewById(R.id.level);
-		this.gameManager = new GameManager(matrixView, nextTetromino, level);		
+		this.gameManager = new GameManager(matrixView, nextTetromino, level, this.getResources(), this.getPackageName());		
 	}
 
 	private void initGestures(){

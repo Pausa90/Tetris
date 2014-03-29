@@ -19,8 +19,7 @@
         android:id="@+id/next_tetromino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/tetromino_o" />
+        android:layout_alignParentRight="true" />
 
     <RelativeLayout
         android:id="@+id/matrixLayout"
