@@ -1,8 +1,8 @@
 package it.iuland.tetris.activity;
 
 import it.iuland.tetris.GameManager;
-import it.iuland.tetris.MatrixView;
 import it.iuland.tetris.R;
+import it.iuland.tetris.view.MatrixView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class PlayActivity extends Activity 
-implements GestureDetector.OnGestureListener{
+		implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
 	
 	private GameManager gameManager;
 
@@ -47,8 +47,6 @@ implements GestureDetector.OnGestureListener{
 		@Override
 		synchronized public void run() {
 			frame.removeCallbacks(frameUpdate);
-			//make any updates to on screen objects here
-			//then invoke the on draw by invalidating the canvas
 			((MatrixView)findViewById(R.id.matrix)).invalidate();
 			frame.postDelayed(frameUpdate, FRAME_RATE);
 		}
@@ -90,21 +88,18 @@ implements GestureDetector.OnGestureListener{
 			//Se mi sono mosso in vericale
 			if (Math.abs(event1.getY() - event2.getY()) > this.swype_min){
 
-				if (this.isUpSwype(event1,event2,velocityY))
-					//Toast.makeText(getApplicationContext(), "Swipe in alto", Toast.LENGTH_SHORT).show();
-					this.gameManager.swypeUp();
+				if (this.isUpSwype(event1,event2,velocityY)){
+					//this.gameManager.rotateClockWise();
+				}
 				else if (this.isDownSwype(event1,event2,velocityY))
-					//Toast.makeText(getApplicationContext(), "Swipe in basso", Toast.LENGTH_SHORT).show();
-					this.gameManager.swypeDown();
+					this.gameManager.traslateToBelow();
 			}
 			//Se mi sono mosso in orizzontale
 			else if (Math.abs(event1.getX() - event2.getX()) > this.swype_min){
 				if (this.isLeftSwype(event1,event2,velocityX))
-					//Toast.makeText(getApplicationContext(), "Swipe a sinistra", Toast.LENGTH_SHORT).show();
-					this.gameManager.swypeLeft();
+					this.gameManager.traslateToLeft();
 				else if (this.isRightSwype(event1,event2,velocityX))
-					//Toast.makeText(getApplicationContext(), "Swipe a destra", Toast.LENGTH_SHORT).show();
-					this.gameManager.swypeRight();
+					this.gameManager.traslateToRight();
 			}
 		} catch (Exception e) {
 			//Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -141,9 +136,11 @@ implements GestureDetector.OnGestureListener{
 		return false;
 	}
 
-
-
-
+	@Override
+	public boolean onSingleTapConfirmed(MotionEvent e) {
+		this.gameManager.rotateClockWise();
+		return true;
+	}
 
 
 
@@ -158,11 +155,7 @@ implements GestureDetector.OnGestureListener{
 	public void onLongPress(MotionEvent e) {
 	}
 
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		return false;
-	}
+
 
 	@Override
 	public void onShowPress(MotionEvent e) {
@@ -172,4 +165,23 @@ implements GestureDetector.OnGestureListener{
 	public boolean onSingleTapUp(MotionEvent e) {
 		return false;
 	}
+
+	@Override
+	public boolean onDoubleTap(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		return false;
+	}
+
+	@Override
+	public boolean onDoubleTapEvent(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }

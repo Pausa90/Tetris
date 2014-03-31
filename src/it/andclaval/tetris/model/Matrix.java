@@ -25,10 +25,13 @@ public class Matrix {
 	private String currentTetromino;
 	private int pivotTetromino;
 	private int tetromino_i_state;
+	private String currentTetrominoName;
 	
 	private int score;
 	private int[] levelInfo; //level[0] = livello, level[1] = #righe completate
 	private int[] comboInfo; //combo[0] = #righe, combo[1] = #hit
+	
+	
 
 	public Matrix(TetrisGame game){
 		this.game = game;
@@ -90,6 +93,10 @@ public class Matrix {
 	public void setCoordinates(Couple<Integer>[] coordinates) {
 		this.coordinates = coordinates;
 	}
+	
+	public String getCurrentTetromino(){
+		return this.currentTetrominoName;
+	}
 
 	/** Inserisce un nuovo tetromino nella matrice **/
 	public void putTetromino(Tetromino next){
@@ -107,6 +114,7 @@ public class Matrix {
 			else
 				this.currentTetromino = "";
 		}
+		this.currentTetrominoName = next.getClass().getName();
 	}
 
 	private void putTetrominoIntoMatrix() {

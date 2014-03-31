@@ -11,7 +11,7 @@ public class Tetromino_L extends Tetromino {
 			shape[0][i] = this.T_FREE;
 			shape[1][i] = this.T_FREE;
 		}
-		shape[0][1]=this.T_OCCUPIED;
+		shape[0][3]=this.T_OCCUPIED;
 		shape[1][3]=this.T_OCCUPIED;
 		shape[1][2]=this.T_OCCUPIED;
 		shape[1][1]=this.T_OCCUPIED;

@@ -4,10 +4,13 @@ import java.util.Locale;
 
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import it.andclaval.tetris.model.TetrisGame;
+import it.andclaval.tetris.render.TextRendering;
+import it.iuland.tetris.view.MatrixView;
 
 public class GameManager {
 
@@ -20,7 +23,14 @@ public class GameManager {
 	private String level;
 	
 	private int currentTetrominoRotation;
+	private int currentTetrominoResource;
 	private String currentTetrominoName;
+	
+	/**
+	 * Per debug
+	 */
+	private TextRendering textRender;
+	private String nextTetrominoName;
 	
 	public GameManager(MatrixView matrixView, ImageView nextTetromino, TextView level, Resources resources, String packageName){
 		this.matrixView = matrixView;
@@ -34,6 +44,9 @@ public class GameManager {
 		this.setCurrentLevel();
 		this.setNextTetromino();
 		this.setCurrentTetromino();
+		
+		this.textRender = new TextRendering();
+		this.printMatrix();
 	}
 	
 	public void setCurrentLevel() {
@@ -41,8 +54,9 @@ public class GameManager {
 	}
 	
 	public void setNextTetromino(){
-		String nextTetrominoName = this.game.getNextTetromino();
-		int drawableId = this.getResourcesID(nextTetrominoName);
+		this.nextTetrominoName = this.game.getNextTetromino();
+		this.nextTetrominoName = this.pathFiltering(this.nextTetrominoName).toLowerCase(Locale.getDefault());
+		int drawableId = this.getResourcesID(this.nextTetrominoName);
 		this.nextTetrominoView.setImageResource(drawableId);		
 	}
 	
@@ -50,13 +64,14 @@ public class GameManager {
 		this.currentTetrominoName = this.game.getCurrentTetrominoName();
 		this.currentTetrominoName = this.pathFiltering(this.currentTetrominoName).toLowerCase(Locale.getDefault());
 		this.currentTetrominoRotation = 0;
+		this.currentTetrominoResource = 0;
 		int drawableId = this.getResourcesID(this.currentTetrominoName);
 		this.matrixView.putTetromino(this.currentTetrominoName, drawableId);
 	}
 	
 	private int getResourcesID(String name){
 		name = this.pathFiltering(name).toLowerCase(Locale.getDefault());
-		return this.resources.getIdentifier(name+this.currentTetrominoRotation, "drawable", this.packageName);
+		return this.resources.getIdentifier(name+this.currentTetrominoResource, "drawable", this.packageName);
 	}
 	
 	private String pathFiltering(String name){
@@ -64,32 +79,35 @@ public class GameManager {
 		return splitted[splitted.length - 1];
 	}
 
-	public void swypeUp() {
+	public void rotateClockWise() {
 		if (this.game.rotateClockWise()){
 			if (!this.currentTetrominoName.equals("tetromino_o")){
 				if (this.currentTetrominoName.equals("tetromino_i") || 
 						this.currentTetrominoName.equals("tetromino_s") || 
 						this.currentTetrominoName.equals("tetromino_z"))
-					this.currentTetrominoRotation = (this.currentTetrominoRotation + 1)%2;
+					this.currentTetrominoResource = (this.currentTetrominoResource + 1)%2;
 				else
-					this.currentTetrominoRotation = (this.currentTetrominoRotation + 1)%4;
-				
-				this.matrixView.rotateClockWise(this.getResourcesID(this.currentTetrominoName));	
+					this.currentTetrominoResource = (this.currentTetrominoResource + 1)%4;
+				this.currentTetrominoRotation = (this.currentTetrominoRotation + 1)%4;
+				this.matrixView.rotateClockWise(this.getResourcesID(this.currentTetrominoName), this.currentTetrominoName, this.currentTetrominoRotation);	
 			}
 		}	
+		this.printMatrix();
 	}
 
-	public void swypeLeft() {
+	public void traslateToLeft() {
 		if (this.game.traslateToLeft())
 			this.matrixView.traslateToLeft();		
+		this.printMatrix();
 	}
 
-	public void swypeRight() {
+	public void traslateToRight() {
 		if (this.game.traslateToRight())
 			this.matrixView.traslateToRight();	
+		this.printMatrix();
 	}
 
-	public void swypeDown() {
+	public void traslateToBelow() {
 		if (this.game.traslateToBelow())
 			this.matrixView.traslateToBelow();
 		else {
@@ -98,8 +116,14 @@ public class GameManager {
 			this.setCurrentLevel();
 			this.setCurrentTetromino();
 		}
+		this.printMatrix();
 	}
 	
-	
+	/**
+	 * Metodo per il debug
+	 */
+	public void printMatrix(){
+		Log.v("debugForMe",this.textRender.renderingToString(this.game.getMatrix(), this.nextTetrominoName));
+	}
 	
 }

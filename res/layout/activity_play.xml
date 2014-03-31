@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" >
 
-        <it.iuland.tetris.MatrixView
+        <it.iuland.tetris.view.MatrixView
             android:id="@+id/matrix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
