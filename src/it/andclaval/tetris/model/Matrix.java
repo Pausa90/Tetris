@@ -179,6 +179,8 @@ public class Matrix {
 		boolean toUpdateScore = false;
 		boolean allOne;
 		int delta = 0;
+		int[] rowsToClean = new int[rows.length]; //utile all'aggiornamento grafico
+		int index = 0;
 		for (int r : rows){
 			r += delta;
 			
@@ -194,21 +196,38 @@ public class Matrix {
 				
 				//Aggiorno le coordinate
 				delta++;
+				rowsToClean[index] = r;
+				index++;
 			}
 			toUpdateScore |= allOne;
 		}
+		if (num_row > 0)
+			this.game.updateAfterRowsCleaned(this.optimizeArray(rowsToClean,index));
 		if (toUpdateScore){
-			this.updateLevel(num_row);
+			if (this.updateLevel(num_row))
+				this.game.updateLevelView(this.getLevel());
 			this.updateScore(num_row);
+			this.game.updateScoreView(this.getScore());
 		}
 	} 
 	
-	private void updateLevel(int num_row) {
+	private int[] optimizeArray(int[] array, int maxIndex) {
+			if (array.length == maxIndex)
+				return array;
+			int[] output = new int[maxIndex];
+			for (int i=0; i<maxIndex; i++)
+				output[i] = array[i];
+			return output;
+	}
+
+	private boolean updateLevel(int num_row) {
 		this.levelInfo[1] += num_row;
 		if (this.levelInfo[1] > this.NUM_ROW_TO_LEVEL_UP){
 			this.levelInfo[0]++;
 			this.levelInfo[1] -= this.NUM_ROW_TO_LEVEL_UP;
+			return true;
 		}
+		return false;
 	}
 
 	private void updateScore(int num_row) {

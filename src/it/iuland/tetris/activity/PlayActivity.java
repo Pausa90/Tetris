@@ -23,7 +23,7 @@ public class PlayActivity extends Activity {
 	private Handler frame = new Handler();
 	private static final int FRAME_RATE = 20; //50 frames per second
 	private Handler update = new Handler();
-	private int UPDATE_RATE = 1000;
+	private int UPDATE_RATE = 1500;
 	
 	private boolean stopUpdateThread = false;
 	private boolean stopFrameThread = false;
@@ -92,7 +92,8 @@ public class PlayActivity extends Activity {
 		MatrixView matrixView = (MatrixView)findViewById(R.id.matrix);
 		ImageView nextTetromino = (ImageView) findViewById(R.id.next_tetromino);
 		TextView level = (TextView) findViewById(R.id.level);
-		this.gameManager = new GameManager(matrixView, nextTetromino, level, this.getResources(), this.getPackageName());		
+		TextView score = (TextView) findViewById(R.id.score);
+		this.gameManager = new GameManager(matrixView, nextTetromino, level, score, this.getResources(), this.getPackageName());		
 	}
 	
 	@Override 

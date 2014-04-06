@@ -15,6 +15,14 @@
         android:text="@string/level"
         android:textSize="@dimen/button_text" />
 
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/score"
+        android:layout_below="@id/level"
+        android:textSize="@dimen/button_text" />
+
     <ImageView
         android:id="@+id/next_tetromino"
         android:layout_width="wrap_content"
@@ -33,13 +41,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
-     </RelativeLayout>
+    </RelativeLayout>
 
     <CheckBox
         android:id="@+id/fallingOnOff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/level"
+        android:layout_below="@+id/score"
         android:layout_centerHorizontal="true"
         android:checked="true"
         android:text="Falling" />

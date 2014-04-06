@@ -3,6 +3,7 @@ package it.iuland.tetris;
 import java.util.Locale;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.webkit.WebView.FindListener;
@@ -17,10 +18,12 @@ public class GameManager {
 	private MatrixView matrixView;
 	private ImageView nextTetrominoView;
 	private TextView levelView;
+	private TextView scoreView;
 	private TetrisGame game;	
 	private Resources resources;
 	private String packageName;
 	private String level;
+	private String score;
 	
 	private int currentTetrominoRotation;
 	private int currentTetrominoResource;
@@ -32,16 +35,20 @@ public class GameManager {
 	private TextRendering textRender;
 	private String nextTetrominoName;
 	
-	public GameManager(MatrixView matrixView, ImageView nextTetromino, TextView level, Resources resources, String packageName){
+	public GameManager(MatrixView matrixView, ImageView nextTetromino, TextView level, TextView score, Resources resources, String packageName){
 		this.matrixView = matrixView;
+		this.matrixView.setController(this);
 		this.nextTetrominoView = nextTetromino;
 		this.levelView = level;
-		this.game = new TetrisGame();
+		this.scoreView = score;
+		this.game = new TetrisGame(this);
 		this.game.startGame();
 		this.resources = resources;
 		this.packageName = packageName;
 		this.level = (String) this.levelView.getText();
+		this.score = (String) this.scoreView.getText();
 		this.setCurrentLevel();
+		this.setCurrentScore();
 		this.setNextTetromino();
 		this.setCurrentTetromino();
 		
@@ -49,8 +56,20 @@ public class GameManager {
 		this.printMatrix();
 	}
 	
-	public void setCurrentLevel() {
-		this.levelView.setText(this.level + " " + this.game.getCurrentLevel());
+	private void setCurrentScore() {
+		this.updateCurrentScore(this.game.getScore());	
+	}
+	
+	public void updateCurrentScore(int score){
+		this.scoreView.setText(this.score + " " + score);
+	}
+	
+	private void setCurrentLevel() {
+		this.updateCurrentLevel(this.game.getCurrentLevel());	
+	}
+	
+	public void updateCurrentLevel(int level){
+		this.levelView.setText(this.level + " " + level);
 	}
 	
 	public void setNextTetromino(){
@@ -119,11 +138,21 @@ public class GameManager {
 		this.printMatrix();
 	}
 	
+	public void updateAfterRowsCleaned(int[] rowsToClean) {
+		this.matrixView.rowsCleaned(rowsToClean);
+	}
+	
 	/**
 	 * Metodo per il debug
 	 */
 	public void printMatrix(){
 		Log.v("debugForMe",this.textRender.renderingToString(this.game.getMatrix(), this.nextTetrominoName));
 	}
+
+	public int getBitmapID(String name) {
+		return this.resources.getIdentifier(name, "drawable", this.packageName);
+	}
+
+
 	
 }

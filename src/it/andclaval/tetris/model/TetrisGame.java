@@ -1,6 +1,7 @@
 package it.andclaval.tetris.model;
 
 import it.andclaval.tetris.model.tetromino.*;
+import it.iuland.tetris.GameManager;
 
 public class TetrisGame {
 	/** da fare singleton **/
@@ -8,10 +9,12 @@ public class TetrisGame {
 	private boolean end;
 	private Tetromino current;
 	private Tetromino next;
+	private GameManager controller;
 
-	public TetrisGame(){
+	public TetrisGame(GameManager gameManager){
 		this.matrix = new Matrix(this);
 		this.end = false;
+		this.controller = gameManager;
 	}
 	
 	public boolean isEnd() {
@@ -74,6 +77,12 @@ public class TetrisGame {
 		return this.matrix.traslateCurrent(false);
 	}
 	
+	public int getScore(){
+		return this.matrix.getScore();
+	}
+	
+	
+	
 	/**
 	 * Returna true se è possibile scendere, false se viene creato un nuovo tetromino 
 	 */
@@ -118,5 +127,20 @@ public class TetrisGame {
 	public boolean equals(Object o){
 		TetrisGame tetrisGame = (TetrisGame) o;
 		return this.matrix.equals(tetrisGame.getMatrix()) && this.end == tetrisGame.end; 
+	}
+
+	/** 	Aggiunti per aggiornare la View **/
+	
+	public void updateLevelView(int level) {
+		this.controller.updateCurrentLevel(level);
+	}
+	
+	public void updateScoreView(int score){
+		this.controller.updateCurrentScore(score);
+	}
+
+	public void updateAfterRowsCleaned(int[] rowsToClean) {
+		this.controller.updateAfterRowsCleaned(rowsToClean);
+		
 	}
 }
