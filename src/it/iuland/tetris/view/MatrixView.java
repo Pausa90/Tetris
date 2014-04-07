@@ -272,7 +272,7 @@ public class MatrixView extends View {
 
 	private int getRowNumber(float y) {
 		float out = y/SQUARE_Y; 					
-		return (int) out;
+		return (int) (out+0.9);
 	}
 	
 	private float getYPositionInMatrix(int row){
