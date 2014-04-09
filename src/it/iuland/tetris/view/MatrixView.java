@@ -1,6 +1,7 @@
 package it.iuland.tetris.view;
 
 import it.iuland.tetris.GameManager;
+import it.iuland.tetris.Log;
 import it.iuland.tetris.R;
 
 import java.util.LinkedList;
@@ -24,6 +25,7 @@ public class MatrixView extends View {
 	private List<RenderedTetromino> tetrominoes;
 	private List<RenderedTetromino> newList; //Utile in fase di eliminazione delle linee
 	private GameManager controller;
+	private Log log;
 
 	public MatrixView(Context context, AttributeSet attrs) {
 		super(context, attrs);		
@@ -45,7 +47,7 @@ public class MatrixView extends View {
 		//Disegno i tetromini
 		for (RenderedTetromino tetromino : this.tetrominoes){
 			canvas.drawBitmap(tetromino.getBitmap(), tetromino.getX(), tetromino.getY(), null);
-		}
+		}		
 	}
 
 	@Override
@@ -154,16 +156,18 @@ public class MatrixView extends View {
 	public void rowsCleaned(int[] rowsToClean) {
 		for (RenderedTetromino tetromino : this.tetrominoes){
 			int[][] tetrominoCoord = this.getTetrominoCoordinate(tetromino);
+			this.log.toLog(this, "tetromino: "+tetromino.toString() + " coordinate: " + tetrominoCoord.toString());
 			if (this.isIn(tetrominoCoord, rowsToClean))
 				this.splitAndUpdateCoord(tetromino, tetrominoCoord, rowsToClean);
 			else if (this.isUpTo(tetrominoCoord, rowsToClean))
 				this.updateCoord(tetromino, rowsToClean.length);
 		}
 		//Aggiorno la lista
+		this.log.toLog(this, "listaVecchia: " + this.tetrominoes.toString());
+		this.log.toLog(this, "listaNuova: " + this.newList.toString());
 		this.tetrominoes.clear();
 		this.tetrominoes.addAll(this.newList);
 		this.newList.clear();
-
 	}
 
 	/**
@@ -293,6 +297,7 @@ public class MatrixView extends View {
 	private void splitAndUpdateCoord(RenderedTetromino tetromino, int[][] tetrominoCoord, int[] rowsToClean) {		
 		//Ricavo le celle rimenenti con la differenza tra i due array
 		int[][] remainingYCells = this.subtraction(tetrominoCoord, rowsToClean); 
+		this.log.toLog(this, "remainsCell: " + remainingYCells.toString());
 		for (int[] cell : remainingYCells){
 
 			//Creo il nuovo tetromino, traslandolo
@@ -300,6 +305,7 @@ public class MatrixView extends View {
 			RenderedTetromino square = new RenderedTetromino(bitmap, "square");
 			square.setX(tetromino.getX()+(cell[2]*SQUARE_X));
 			square.setY(tetromino.getY()+((cell[3]+1)*SQUARE_Y));
+			this.log.toLog(this, "cell: " + cell.toString() + " tetromino: " + tetromino.toString() + " square: " + square.toString());
 			
 			this.newList.add(square);
 		}
@@ -332,11 +338,16 @@ public class MatrixView extends View {
 	}
 
 	private void updateCoord(RenderedTetromino tetromino, int numRowsToClean) {
+		this.log.toLog(this, "updateCoord tetromino: " + tetromino.toString() + " numRowsToClean:" + numRowsToClean);
 		for (int i=0; i<numRowsToClean; i++)
 			this.traslateToBelow(tetromino);
 		this.newList.add(tetromino);
 	}
-
+	
+	public void setLog(Log log){
+		this.log = log;
+	}
+	
 }
 
 class RenderedTetromino{

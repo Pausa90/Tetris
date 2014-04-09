@@ -51,7 +51,7 @@ public final class R {
         public static final int title=0x7f020019;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000b;
+        public static final int action_settings=0x7f08000e;
         public static final int buttonsLayout=0x7f080001;
         public static final int fallingOnOff=0x7f08000a;
         public static final int high_score_button=0x7f080003;
@@ -62,6 +62,9 @@ public final class R {
         public static final int next_tetromino=0x7f080007;
         public static final int options_button=0x7f080004;
         public static final int play_button=0x7f080002;
+        public static final int reportBug=0x7f08000b;
+        public static final int reportBugMessage=0x7f08000d;
+        public static final int reportBugMessageEditText=0x7f08000c;
         public static final int score=0x7f080006;
     }
     public static final class layout {

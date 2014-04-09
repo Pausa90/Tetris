@@ -16,6 +16,7 @@ public class GestureManager implements GestureDetector.OnGestureListener, Gestur
 	private int swype_min_vel;
 	private Resources resources;
 	private GameManager gameManager;
+	private boolean gameOver = false;
 
 	public GestureManager(GameManager gameManager, Context applicationContext) {
 		this.gestureDetector = new GestureDetector(applicationContext, this);
@@ -37,11 +38,17 @@ public class GestureManager implements GestureDetector.OnGestureListener, Gestur
 		this.gestureDetector.onTouchEvent(event);
 		return true;
 	}
+	
+	public void setGameOver(){
+		this.gameOver  = true;
+	}
 
 
 	@Override
 	//Intercetta l'evento di swype
 	public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+		if (this.gameOver)
+			return false;
 		try {
 			//Se mi sono mosso in vericale
 			if (Math.abs(event1.getY() - event2.getY()) > this.swype_min){
