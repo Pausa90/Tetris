@@ -1,7 +1,9 @@
 package it.iuland.tetris;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,6 +35,8 @@ public class GameManager {
 	private int currentTetrominoResource;
 	private String currentTetrominoName;
 	private it.iuland.tetris.Log log;
+	
+	private Map<String,Integer> nameToBitmapID;
 
 	/**
 	 * Per debug
@@ -63,6 +67,17 @@ public class GameManager {
 		this.textRender = new TextRendering();
 		this.printMatrix();
 	}
+	
+	private void loadTetrominoResources(){
+		this.nameToBitmapID = new HashMap<String, Integer>();
+		this.nameToBitmapID.put("tetromino_i", this.getResourcesID("tetromino_i"));
+		this.nameToBitmapID.put("tetromino_j", this.getResourcesID("tetromino_j"));
+		this.nameToBitmapID.put("tetromino_l", this.getResourcesID("tetromino_l"));
+		this.nameToBitmapID.put("tetromino_o", this.getResourcesID("tetromino_o"));
+		this.nameToBitmapID.put("tetromino_s", this.getResourcesID("tetromino_s"));
+		this.nameToBitmapID.put("tetromino_t", this.getResourcesID("tetromino_t"));
+		this.nameToBitmapID.put("tetromino_z", this.getResourcesID("tetromino_z"));
+	}
 
 	private void setCurrentScore() {
 		this.updateCurrentScore(this.game.getScore());	
@@ -83,7 +98,7 @@ public class GameManager {
 	public void setNextTetromino(){
 		this.nextTetrominoName = this.game.getNextTetromino();
 		this.nextTetrominoName = this.pathFiltering(this.nextTetrominoName).toLowerCase(Locale.getDefault());
-		int drawableId = this.getResourcesID(this.nextTetrominoName);
+		int drawableId = this.nameToBitmapID.get(this.nextTetrominoName+"0");
 		this.nextTetrominoView.setImageResource(drawableId);				
 		this.log.toLog(this, "Next Tetromino name " + this.nextTetrominoName + " id: " + drawableId);  //LOG
 	}
@@ -93,7 +108,7 @@ public class GameManager {
 		this.currentTetrominoName = this.pathFiltering(this.currentTetrominoName).toLowerCase(Locale.getDefault());
 		this.currentTetrominoRotation = 0;
 		this.currentTetrominoResource = 0;
-		int drawableId = this.getResourcesID(this.currentTetrominoName);
+		int drawableId = this.nameToBitmapID.get(this.currentTetrominoName);
 		this.matrixView.putTetromino(this.currentTetrominoName, drawableId);
 	}
 
