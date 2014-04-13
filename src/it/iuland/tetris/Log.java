@@ -30,25 +30,6 @@ public class Log {
 		android.util.Log.v(caller.getClass().getName(), msg);
 	}
 
-	//	public void save(String message){
-	//		this.toLog(this, "Bug Report Message: " + message);
-	//		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", new Locale("it"));
-	//		Date date = new Date();
-	//		File persistentLog = new File(Environment.getExternalStorageDirectory()+File.separator+"TetrisOnlineApp",
-	//										dateFormat.format(date) + "log.txt");
-	//	    persistentLog.mkdirs();
-	//		try {
-	//			FileOutputStream outStream = new FileOutputStream(persistentLog);
-	//			OutputStreamWriter outWriter = new OutputStreamWriter(outStream);
-	//			outWriter.append(this.log);
-	//			outWriter.close();
-	//			outStream.close();		
-	//		} catch (IOException e) {
-	//			// TODO Auto-generated catch block
-	//			e.printStackTrace();
-	//		}
-	//	}
-
 	public boolean save(Context context, String message) throws IOException{		
 		this.toLog(this, "Bug Report Message: " + message);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", new Locale("it"));

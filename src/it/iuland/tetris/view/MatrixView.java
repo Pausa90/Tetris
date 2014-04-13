@@ -187,6 +187,8 @@ public class MatrixView extends View {
 				this.splitAndUpdateCoord(tetromino, tetrominoCoord, rowsToClean);
 			else if (this.isUpTo(tetrominoCoord, rowsToClean))
 				this.updateCoord(tetromino, rowsToClean.length);
+			else
+				this.newList.add(tetromino);
 		}
 		//Aggiorno la lista
 		this.log.toLog(this, "listaVecchia: " + this.tetrominoes.toString());
@@ -228,7 +230,7 @@ public class MatrixView extends View {
 		String name = tetromino.getName();		
 		int y = this.getRowNumber(tetromino.getY());
 		int x = this.getColumnNumber(tetromino.getX());
-		if (name.equals("square"))
+		if (name.matches("square_."))
 			return new int[][] { {x,y,0,0} };
 		if (name.equals("tetromino_o"))
 			return new int[][] { {x,y,0,0}, {x,y+1,0,1}, {x+1,y,1,0}, {x+1,y+1,1,1} }; 
@@ -277,29 +279,6 @@ public class MatrixView extends View {
 		return null;
 	}
 
-	//	private int getRowNumber(float y) {
-	//		//y : maxY = return : 20
-	//		float out = 20 * y / MAX_Y; // Da controllare con il debugger
-	//		return (int) out;
-	//	}
-	//	
-	//	private float getYPositionInMatrix(int row){
-	//		//return : maxY = row : 20
-	//		float out = MAX_Y * row / 20; // Da controllare con il debugger
-	//		return (int) out;
-	//	}
-	//	
-	//	private int getColumnNumber(float x) {
-	//		//x : maxX = return : 12
-	//		float out = 12 * x / MAX_X; // Da controllare con il debugger
-	//		return (int) out;
-	//	}
-	//	
-	//	private float getXPositionInMatrix(int column){
-	//		float out = MAX_X * column / 12; // Da controllare con il debugger
-	//		return (int) out;
-	//	}
-
 	private int getRowNumber(float y) {
 		float out = y/SQUARE_Y; 					
 		return (int) (out+0.9);
@@ -324,17 +303,31 @@ public class MatrixView extends View {
 		//Ricavo le celle rimenenti con la differenza tra i due array
 		int[][] remainingYCells = this.subtraction(tetrominoCoord, rowsToClean); 
 		this.log.toLog(this, "remainsCell: " + this.printCoord(remainingYCells));
+		int rowsToTraslate;
 		for (int[] cell : remainingYCells){
-
+			
+			rowsToTraslate = this.getRowsToTraslate(rowsToClean, cell);
 			//Creo il nuovo tetromino, traslandolo
-			Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), this.controller.getBitmapID("square"));
-			RenderedTetromino square = new RenderedTetromino(bitmap, "square");
+			String[] nameSplitted = tetromino.getName().split("_");
+			String tetrominoName = "square" + "_" + nameSplitted[nameSplitted.length-1];
+			
+			Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), this.controller.getBitmapID(tetrominoName)); 
+			RenderedTetromino square = new RenderedTetromino(bitmap, tetrominoName);
 			square.setX(tetromino.getX()+(cell[2]*SQUARE_X));
-			square.setY(tetromino.getY()+((cell[3]+1)*SQUARE_Y));
-			this.log.toLog(this, "cell: " + printCoord(cell) + " tetromino: " + tetromino.toString() + " square: " + square.toString());
+			square.setY(tetromino.getY()+((cell[3]+rowsToTraslate)*SQUARE_Y));
+			this.log.toLog(this, "cell: " + printCoord(cell) + " tetromino: " + tetromino.toString() + " square: " + square.toString() + 
+					" coord:" + printCoord(getTetrominoCoordinate(square)));
 
 			this.newList.add(square);
 		}
+	}
+
+	private int getRowsToTraslate(int[] rowsToClean, int[] cell) {
+		int count = 0;
+		for (int row : rowsToClean)
+			if (cell[1]<row)
+				count++;
+		return count;
 	}
 
 	private int[][] subtraction(int[][] tetrominoCoord, int[] rowsToClean) {

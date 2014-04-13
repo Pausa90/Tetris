@@ -195,8 +195,8 @@ public class Matrix {
 				this.cleanRow(r, rows);
 				
 				//Aggiorno le coordinate
+				rowsToClean[index] = r-delta;
 				delta++;
-				rowsToClean[index] = r;
 				index++;
 			}
 			toUpdateScore |= allOne;

@@ -161,8 +161,17 @@ public class GameManager {
 	}
 
 	public void updateAfterRowsCleaned(int[] rowsToClean) {
-		this.log.toLog(this, "updateAfterRowsCleaned:" + rowsToClean.toString());
+		this.log.toLog(this, "updateAfterRowsCleaned:" + printCoord(rowsToClean));
 		this.matrixView.rowsCleaned(rowsToClean);
+	}
+	
+	private String printCoord(int[] coord){
+		String out = "[";
+		for (int i=0; i<coord.length-1; i++){
+			out += coord[i] + ", ";
+		}
+		out += coord[coord.length-1] + "]";
+		return out;
 	}
 
 	/**
