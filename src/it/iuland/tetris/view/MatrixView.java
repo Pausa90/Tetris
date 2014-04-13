@@ -60,7 +60,7 @@ public class MatrixView extends View {
 	public void setController(GameManager gameManager){
 		this.controller = gameManager;
 	}
-	
+
 	public void putTetromino(String name, int drawableId) {
 		Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), drawableId);
 		RenderedTetromino current = new RenderedTetromino(bitmap, name);
@@ -91,7 +91,7 @@ public class MatrixView extends View {
 		RenderedTetromino tetromino = this.tetrominoes.get(this.tetrominoes.size()-1);
 		tetromino.setY(tetromino.getY()+SQUARE_Y);			
 	}
-	
+
 	private void traslateToBelow(RenderedTetromino tetromino){
 		tetromino.setY(tetromino.getY()+SQUARE_Y);
 	}
@@ -153,10 +153,36 @@ public class MatrixView extends View {
 		}
 	}
 
+	private String printCoord(int[][] coord){
+		String out = "[";
+		int count = 0;
+		for (int[] sub : coord){
+			out += "[";
+			for (int i=0; i<sub.length-1; i++){
+				out += sub[i] + ", ";
+			}
+			if (count < coord.length-1)
+				out += sub[sub.length-1] + "], ";
+			else
+				out += sub[sub.length-1] + "]";
+			count++;
+		}
+		return out + "]";
+	}
+
+	private String printCoord(int[] coord){
+		String out = "[";
+		for (int i=0; i<coord.length-1; i++){
+			out += coord[i] + ", ";
+		}
+		out += coord[coord.length-1] + "]";
+		return out;
+	}
+
 	public void rowsCleaned(int[] rowsToClean) {
 		for (RenderedTetromino tetromino : this.tetrominoes){
 			int[][] tetrominoCoord = this.getTetrominoCoordinate(tetromino);
-			this.log.toLog(this, "tetromino: "+tetromino.toString() + " coordinate: " + tetrominoCoord.toString());
+			this.log.toLog(this, "tetromino: "+tetromino.toString() + " coordinate: " + printCoord(tetrominoCoord)); //stampare le coordinate
 			if (this.isIn(tetrominoCoord, rowsToClean))
 				this.splitAndUpdateCoord(tetromino, tetrominoCoord, rowsToClean);
 			else if (this.isUpTo(tetrominoCoord, rowsToClean))
@@ -183,8 +209,8 @@ public class MatrixView extends View {
 					return true;
 		return false;
 	}
-	
-	
+
+
 	private boolean isUpTo(int[][] tetrominoCoord, int[] rowsToClean) {
 		for (int i[] : tetrominoCoord)
 			for (int j : rowsToClean) //TODO: Se sono ordinate posso prendere il più piccolo
@@ -208,8 +234,8 @@ public class MatrixView extends View {
 			return new int[][] { {x,y,0,0}, {x,y+1,0,1}, {x+1,y,1,0}, {x+1,y+1,1,1} }; 
 		if (name.equals("tetromino_i")){
 			switch (tetromino.getRotation()) {
-			case 0: return new int[][] { {x,y,0,0}, {x+1,y,1,0}, {x+2,y,2,0}, {x+3,y,3,0} };
-			case 1: return new int[][] { {x,y,0,0}, {x,y+1,0,1}, {x,y+2,0,2}, {x,y+3,0,3} };
+			case 0: case 2: return new int[][] { {x,y,0,0}, {x+1,y,1,0}, {x+2,y,2,0}, {x+3,y,3,0} };
+			case 1: case 3: return new int[][] { {x,y,0,0}, {x,y+1,0,1}, {x,y+2,0,2}, {x,y+3,0,3} };
 			}
 		}
 		if (name.equals("tetromino_j")){
@@ -231,7 +257,7 @@ public class MatrixView extends View {
 		if (name.equals("tetromino_s")){
 			switch (tetromino.getRotation()) {
 			case 0: case 2: return new int[][] { {x,y+1,0,1}, {x+1,y+1,1,1}, {x+1,y,1,0}, {x+2,y,2,0} };
-			case 1: case 3: return new int[][] { {x,y,0,0}, {x,y+1,0,1}, {x+1,y,1,0}, {x+1,y+2,1,2} };
+			case 1: case 3: return new int[][] { {x,y,0,0}, {x,y+1,0,1}, {x+1,y+1,1,1}, {x+1,y+2,1,2} };
 			}
 		}
 		if (name.equals("tetromino_z")){
@@ -251,53 +277,53 @@ public class MatrixView extends View {
 		return null;
 	}
 
-//	private int getRowNumber(float y) {
-//		//y : maxY = return : 20
-//		float out = 20 * y / MAX_Y; // Da controllare con il debugger
-//		return (int) out;
-//	}
-//	
-//	private float getYPositionInMatrix(int row){
-//		//return : maxY = row : 20
-//		float out = MAX_Y * row / 20; // Da controllare con il debugger
-//		return (int) out;
-//	}
-//	
-//	private int getColumnNumber(float x) {
-//		//x : maxX = return : 12
-//		float out = 12 * x / MAX_X; // Da controllare con il debugger
-//		return (int) out;
-//	}
-//	
-//	private float getXPositionInMatrix(int column){
-//		float out = MAX_X * column / 12; // Da controllare con il debugger
-//		return (int) out;
-//	}
+	//	private int getRowNumber(float y) {
+	//		//y : maxY = return : 20
+	//		float out = 20 * y / MAX_Y; // Da controllare con il debugger
+	//		return (int) out;
+	//	}
+	//	
+	//	private float getYPositionInMatrix(int row){
+	//		//return : maxY = row : 20
+	//		float out = MAX_Y * row / 20; // Da controllare con il debugger
+	//		return (int) out;
+	//	}
+	//	
+	//	private int getColumnNumber(float x) {
+	//		//x : maxX = return : 12
+	//		float out = 12 * x / MAX_X; // Da controllare con il debugger
+	//		return (int) out;
+	//	}
+	//	
+	//	private float getXPositionInMatrix(int column){
+	//		float out = MAX_X * column / 12; // Da controllare con il debugger
+	//		return (int) out;
+	//	}
 
 	private int getRowNumber(float y) {
 		float out = y/SQUARE_Y; 					
 		return (int) (out+0.9);
 	}
-	
+
 	private float getYPositionInMatrix(int row){
 		float out = row*SQUARE_Y; 
 		return (int) out;
 	}
-	
+
 	private int getColumnNumber(float x) {		
 		float out = x/SQUARE_X; 
 		return (int) (out+0.9);
 	}
-	
+
 	private float getXPositionInMatrix(int column){
 		float out = column*SQUARE_X;
 		return (int) out;
 	}
-	
+
 	private void splitAndUpdateCoord(RenderedTetromino tetromino, int[][] tetrominoCoord, int[] rowsToClean) {		
 		//Ricavo le celle rimenenti con la differenza tra i due array
 		int[][] remainingYCells = this.subtraction(tetrominoCoord, rowsToClean); 
-		this.log.toLog(this, "remainsCell: " + remainingYCells.toString());
+		this.log.toLog(this, "remainsCell: " + this.printCoord(remainingYCells));
 		for (int[] cell : remainingYCells){
 
 			//Creo il nuovo tetromino, traslandolo
@@ -305,12 +331,12 @@ public class MatrixView extends View {
 			RenderedTetromino square = new RenderedTetromino(bitmap, "square");
 			square.setX(tetromino.getX()+(cell[2]*SQUARE_X));
 			square.setY(tetromino.getY()+((cell[3]+1)*SQUARE_Y));
-			this.log.toLog(this, "cell: " + cell.toString() + " tetromino: " + tetromino.toString() + " square: " + square.toString());
-			
+			this.log.toLog(this, "cell: " + printCoord(cell) + " tetromino: " + tetromino.toString() + " square: " + square.toString());
+
 			this.newList.add(square);
 		}
 	}
-	
+
 	private int[][] subtraction(int[][] tetrominoCoord, int[] rowsToClean) {
 		int[][] output = new int[tetrominoCoord.length][4];
 		boolean notFound = true;
@@ -343,11 +369,11 @@ public class MatrixView extends View {
 			this.traslateToBelow(tetromino);
 		this.newList.add(tetromino);
 	}
-	
+
 	public void setLog(Log log){
 		this.log = log;
 	}
-	
+
 }
 
 class RenderedTetromino{
@@ -412,7 +438,7 @@ class RenderedTetromino{
 	public String getName(){
 		return this.name;
 	}
-	
+
 	@Override
 	public String toString(){
 		return this.name + " (" + this.x + "," + this.y + ") rotazione:" + this.rotation; 

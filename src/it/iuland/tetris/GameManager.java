@@ -85,7 +85,7 @@ public class GameManager {
 		this.nextTetrominoName = this.pathFiltering(this.nextTetrominoName).toLowerCase(Locale.getDefault());
 		int drawableId = this.getResourcesID(this.nextTetrominoName);
 		this.nextTetrominoView.setImageResource(drawableId);				
-		this.log.toLog(this, "Next Tetromino name " + this.nextTetrominoName + "id: " + drawableId);  //LOG
+		this.log.toLog(this, "Next Tetromino name " + this.nextTetrominoName + " id: " + drawableId);  //LOG
 	}
 
 	public void setCurrentTetromino(){
@@ -140,10 +140,12 @@ public class GameManager {
 		this.printMatrix();
 	}
 
-	public void traslateToBelow() {
+	public boolean traslateToBelow() {
 		if (this.game.traslateToBelow()){
 			this.log.toLog(this, "traslateToBelow");
 			this.matrixView.traslateToBelow();
+			this.printMatrix();
+			return true;
 		}
 		else {
 			if (this.game.isEnd())
@@ -155,6 +157,7 @@ public class GameManager {
 			}
 		}
 		this.printMatrix();
+		return false;
 	}
 
 	public void updateAfterRowsCleaned(int[] rowsToClean) {
