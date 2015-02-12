@@ -1,6 +1,5 @@
-## TetrisModel
+## Tetris
 
-A simple and playable Tetris game model developed in java aimed at this project [TetrisProject].
+A simple Tetris game for Android devices.
 
-
-[TetrisProject]: https://github.com/Pausa90/Tetris
+The project resulted from the challenge to realize a simple game without any game framework. Logic, multi-threading and canvas update are managed manually.
