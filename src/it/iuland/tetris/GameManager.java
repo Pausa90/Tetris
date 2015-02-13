@@ -50,13 +50,14 @@ public class GameManager {
 		this.matrixView.setController(this);
 		this.log = new it.iuland.tetris.Log();
 		this.matrixView.setLog(this.log);
+		this.resources = resources;
+		this.packageName = packageName;
+		this.loadTetrominoResources();
 		this.nextTetrominoView = nextTetromino;
 		this.levelView = level;
 		this.scoreView = score;
 		this.game = new TetrisGame(this);
 		this.game.startGame();
-		this.resources = resources;
-		this.packageName = packageName;
 		this.level = (String) this.levelView.getText();
 		this.score = (String) this.scoreView.getText();
 		this.setCurrentLevel();
@@ -98,7 +99,7 @@ public class GameManager {
 	public void setNextTetromino(){
 		this.nextTetrominoName = this.game.getNextTetromino();
 		this.nextTetrominoName = this.pathFiltering(this.nextTetrominoName).toLowerCase(Locale.getDefault());
-		int drawableId = this.nameToBitmapID.get(this.nextTetrominoName+"0");
+		int drawableId = this.nameToBitmapID.get(this.nextTetrominoName);
 		this.nextTetrominoView.setImageResource(drawableId);				
 		this.log.toLog(this, "Next Tetromino name " + this.nextTetrominoName + " id: " + drawableId);  //LOG
 	}

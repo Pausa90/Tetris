@@ -52,16 +52,6 @@
         android:checked="true"
         android:text="Falling" />
 
-    <Button
-        android:id="@+id/reportBug"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/next_tetromino"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_toRightOf="@id/fallingOnOff"
-        android:text="Report Bug" />
-
     <EditText
         android:id="@+id/reportBugMessageEditText"
         android:layout_width="350dp"
@@ -73,11 +63,20 @@
 
     <Button
         android:id="@+id/reportBugMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_below="@id/reportBugMessageEditText"
         android:layout_centerInParent="true"
         android:text="Report Bug"
         android:visibility="gone" />
+
+    <Button
+        android:id="@+id/reportBug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/next_tetromino"
+        android:layout_alignTop="@+id/fallingOnOff"
+        android:layout_marginTop="10dp"
+        android:text="Report Bug" />
 
 </RelativeLayout>
